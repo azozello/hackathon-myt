@@ -44,19 +44,22 @@ export class HistoryComponent implements OnInit {
     this.subs.push(
       this.fireBase.getHistoryList().subscribe(history => {
         this.historyList = history;
-        //this.historyList.push({"login":"abcd", "Weight":34, "date": new Date()})
-        //this.historyList.push({"login":"abcd", "Weight":35, "date": new Date()})
-        //this.historyList.push({"login":"abcd", "Weight":36, "date": new Date()})
         var logins = (new Set(this.historyList.map(h => h.login)));
         console.log(logins);
 
         logins.forEach(
           l => {
-            this.plots.push(this.getUserDataPlot(this.historyList.filter(h => h.login == l)));
+            this.plots.push(this.getUserDataPlot(this.historyList.filter(h => h.login === l)));
           }
         );
-
-        console.log(history);
+        this.historyList = this.historyList
+          .sort(h => h.date)
+          .map(hi => {
+            return {
+              ...hi,
+              date: new Date().setTime(hi.date.seconds * 1000)
+            };
+          });
       })
     );
   }

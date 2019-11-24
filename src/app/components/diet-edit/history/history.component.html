@@ -2,18 +2,24 @@
   <div class="row justify-content-between">
     <div  *ngFor="let plot of plots" class="col-5">
       <div class="row mt-3">
-        <canvas baseChart width="400" height="400"
-          [datasets]="plot.lineChartData"
-          [labels]="plot.lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColors"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          [plugins]="lineChartPlugins">
-        </canvas>
+        <div class="col-12">
+          <canvas baseChart width="400" height="400"
+                  [datasets]="plot.lineChartData"
+                  [labels]="plot.lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"
+                  [plugins]="lineChartPlugins">
+          </canvas>
           <p class="text-primary ml-2">
             {{plot.login}}
           </p>
+        </div>
+
+        <div *ngFor="let food of historyList" class="col-12">
+          <p>{{food.Weight}} - {{food.date | date}}</p>
+        </div>
       </div>
     </div>
   </div>
