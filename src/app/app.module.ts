@@ -11,6 +11,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {FireBaseService} from './services/fire-base.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import { HistoryComponent } from './components/diet-edit/history/history.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { HistoryComponent } from './components/diet-edit/history/history.compone
       appId: '1:1082325939343:web:b2fcc6f3259d0ef1732cfa'
     }),
     AngularFirestoreModule,
+    ChartsModule,
   ],
   providers: [
     FireBaseService

@@ -19,6 +19,13 @@ export class FireBaseService {
       );
   }
 
+  public getHistoryList(): Observable<any> {
+    return this.db.collection('history').snapshotChanges()
+      .pipe(
+        map((response) => response.map(r => r.payload.doc.data()))
+      );
+  }
+
   public getProduct(): Observable<any> {
     return this.db.collection('products').snapshotChanges()
       .pipe(

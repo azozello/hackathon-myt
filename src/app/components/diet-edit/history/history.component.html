@@ -1,3 +1,20 @@
-<p>
-  history works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <div *ngFor="let plot of plots" class="row mt-3">        
+        <canvas baseChart width="400" height="400"
+          [datasets]="plot.lineChartData"
+          [labels]="plot.lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+        </canvas>
+          <p class="text-primary ml-2">
+            {{plot.login}}
+          </p>
+      </div>
+    </div>
+  </div>
+</div>
