@@ -13,6 +13,8 @@ export class DietEditComponent implements OnInit, OnDestroy {
 
   private subs = [];
 
+  imageLoaded;
+
   patientList = [];
   productList = [];
 
@@ -39,9 +41,7 @@ export class DietEditComponent implements OnInit, OnDestroy {
 
   addProduct(): void {
     if (this.productForm.valid) {
-      this.newProductsList.push({
-        name: this.productForm.controls.name.value
-      });
+      this.newProductsList.push(this.productList.filter(p => p.Name === this.productForm.controls.name.value)[0]);
     }
   }
 
@@ -53,7 +53,7 @@ export class DietEditComponent implements OnInit, OnDestroy {
     this.dietItemList.push({
       description: this.dietItemForm.controls.description.value,
       time: this.dietItemForm.controls.time.value,
-      products: this.newProductsList.filter(p => p.name)
+      products: this.newProductsList.filter(p => p.Name)
     });
 
     this.newProductsList = [];
@@ -65,22 +65,40 @@ export class DietEditComponent implements OnInit, OnDestroy {
   }
 
   saveDiet(): void {
-    this.fireBase.saveDiet()
-      .then(
-        (success) => {
-          console.log(success);
-        }
-      )
-      .catch(
-        (err) => {
-          console.log(err);
-        }
-      );
+    console.log({
+      title: this.dietItemForm.controls.title.value,
+      description: this.descriptionForm.controls.description.value,
+      image: this.imageLoaded,
+      items: this.dietItemList
+    });
+    this.fireBase.saveDiet({
+      title: this.dietItemForm.controls.title.value,
+      description: this.descriptionForm.controls.description.value,
+      image: this.imageLoaded,
+      items: this.dietItemList
+    })
+      .then(() => {
+        console.log('SUCCESS');
+        this.resetView();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  onFileInputChange(event) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (e: any) => {
+        this.imageLoaded = e.target.result;
+        console.log(e.target.result);
+      };
+    }
   }
 
   private initForms(): void {
     this.dietItemForm = this.fb.group({
       description: ['', Validators.required],
+      title: ['', Validators.required],
       time: ['', Validators.required]
     });
     this.productForm = this.fb.group({
@@ -104,14 +122,18 @@ export class DietEditComponent implements OnInit, OnDestroy {
     this.newProductsList = [];
     this.dietItemList = [];
     this.descriptionForm.reset();
-    this.dietItemForm.reset();
+    this.dietItemForm.controls.description.setValue('');
+    this.dietItemForm.controls.time.setValue('');
     this.productForm.reset();
   }
 
   private loadData(): void {
     this.subs.push(
       this.fireBase.getPatientsList().subscribe(users => this.patientList = users),
-      this.fireBase.getProduct().subscribe(products => this.productList = products)
+      this.fireBase.getProduct().subscribe(products => {
+        this.productList = products;
+        console.log(products);
+      })
     );
   }
 }

@@ -11,10 +11,8 @@
 
     <div class="col-auto">
       <button class="btn btn-success"
-              (click)="saveDiet()"
-      >
-
-<!--        [disabled]="!(dietItemList.length > 0 && descriptionForm.valid && userFrom.valid)"-->
+              [disabled]="!(dietItemList.length > 0 && descriptionForm.valid)"
+              (click)="saveDiet()">
         Save
       </button>
     </div>
@@ -55,6 +53,24 @@
           <div class="col-12">
             <form [formGroup]="dietItemForm"
                   class="row pl-0 pr-0 mt-3">
+
+              <div class="col-6 form-group pl-0">
+                <label for="exampleTextarea">
+                  Diet title
+                </label>
+                <input type="text"
+                       formControlName="title"
+                       class="form-control"/>
+              </div>
+
+              <div class="col-6 form-group">
+                <label for="">
+                  Diet image
+                </label>
+                <input type="file"
+                       (change)="onFileInputChange($event)"
+                       class="form-control">
+              </div>
 
               <div class="col-8 pl-0">
                 <div class="form-group">
@@ -124,7 +140,7 @@
           <button class="btn-outline-success"
                   (click)="addDietItem()"
                   [disabled]="!(dietItemForm.valid && newProductsList.length > 0)">
-            Save diet item
+            Append diet item
           </button>
         </div>
       </div>
@@ -142,6 +158,14 @@
                   rows="3">
         </textarea>
       </form>
+
+      <div class="row">
+        <div class="col-4">
+          <img [src]="imageLoaded"
+               alt=""
+               class="img-fluid">
+        </div>
+      </div>
     </div>
   </div>
 </div>
