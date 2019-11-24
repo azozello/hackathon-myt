@@ -1,7 +1,7 @@
 <div class="container">
-  <div class="row">
-    <div class="col-6">
-      <div *ngFor="let plot of plots" class="row mt-3">        
+  <div class="row justify-content-between">
+    <div  *ngFor="let plot of plots" class="col-5">
+      <div class="row mt-3">
         <canvas baseChart width="400" height="400"
           [datasets]="plot.lineChartData"
           [labels]="plot.lineChartLabels"
