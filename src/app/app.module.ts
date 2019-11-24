@@ -10,12 +10,14 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {FireBaseService} from './services/fire-base.service';
 import {ReactiveFormsModule} from '@angular/forms';
+import { HistoryComponent } from './components/diet-edit/history/history.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    DietEditComponent
+    DietEditComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
