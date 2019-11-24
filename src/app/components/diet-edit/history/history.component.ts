@@ -43,9 +43,9 @@ export class HistoryComponent implements OnInit {
     this.subs.push(
       this.fireBase.getHistoryList().subscribe(history => {
         this.historyList = history;       
-        this.historyList.push({"login":"abcd", "Weight":34, "date": new Date()})
-        this.historyList.push({"login":"abcd", "Weight":35, "date": new Date()})
-        this.historyList.push({"login":"abcd", "Weight":36, "date": new Date()})
+        //this.historyList.push({"login":"abcd", "Weight":34, "date": new Date()})
+        //this.historyList.push({"login":"abcd", "Weight":35, "date": new Date()})
+        //this.historyList.push({"login":"abcd", "Weight":36, "date": new Date()})
         var logins = (new Set(this.historyList.map(h => h.login)))
         console.log(logins);
 
